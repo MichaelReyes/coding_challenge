@@ -1,6 +1,7 @@
 package com.app.tech.codingchallenge.core.di
 
 import com.app.tech.codingchallenge.BuildConfig
+import com.app.tech.codingchallenge.core.network.ApiService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,6 +56,12 @@ class NetworkModule {
             .addConverterFactory(GsonConverterFactory.create())
             .client(client)
             .build()
+    }
+
+    @Provides
+    @Singleton
+    internal fun apiService(retrofit: Retrofit): ApiService {
+        return retrofit.create(ApiService::class.java)
     }
 
 }

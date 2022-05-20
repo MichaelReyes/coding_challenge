@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.app.tech.codingchallenge.core.data.network.Resource
+import com.app.tech.codingchallenge.core.extension.handleResponse
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 
@@ -45,5 +47,22 @@ abstract class BaseViewModel : ViewModel() {
 
     override fun onCleared() {
         super.onCleared()
+    }
+
+    suspend fun <T> handleResponse(resource: Resource<T>, onSuccess: (T?) -> Unit) {
+        withContext(Dispatchers.Main) {
+            resource.handleResponse(
+                onError = {
+                    setError(it.message ?: "An error has occurred")
+                    setLoading(false)
+                },
+                onLoading = {
+                    setLoading(true)
+                }
+            ) {
+                onSuccess.invoke(resource.data)
+                setLoading(false)
+            }
+        }
     }
 }

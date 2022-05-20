@@ -7,7 +7,9 @@ import com.app.tech.codingchallenge.R
 import com.app.tech.codingchallenge.core.base.BaseActivity
 import com.app.tech.codingchallenge.core.base.BaseViewModel
 import com.app.tech.codingchallenge.databinding.ActivityDashboardBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DashboardActivity : BaseActivity<ActivityDashboardBinding>() {
     override val layoutRes: Int
         get() = R.layout.activity_dashboard
