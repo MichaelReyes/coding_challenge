@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.app.tech.codingchallenge.feature.dashboard.post_details.PostDetailsViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/margin_small"
+        tools:context=".feature.dashboard.post_details.PostDetailsFragment">
+
+        <TextView
+            android:id="@+id/postDetails_tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/font_size_extra_large"
+            android:textStyle="bold"
+            android:text="@{viewModel.post.title}"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Title" />
+
+        <TextView
+            android:id="@+id/postDetails_tvBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.post.title}"
+            android:textSize="@dimen/font_size_regular"
+            app:layout_constraintTop_toBottomOf="@+id/postDetails_tvTitle"
+            tools:text="POST BODY HERE" />
+
+        <TextView
+            android:id="@+id/postDetails_tvCommentsLabel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_small"
+            android:text="@string/lbl_comments"
+            android:textSize="@dimen/font_size_large"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/postDetails_tvBody" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/postDetails_rvComments"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin_small"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/postDetails_tvCommentsLabel"
+            tools:listitem="@layout/item_comment" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

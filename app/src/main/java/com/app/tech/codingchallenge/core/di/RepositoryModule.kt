@@ -1,5 +1,6 @@
 package com.app.tech.codingchallenge.core.di
 
+import com.app.tech.codingchallenge.core.data.db.dao.CommentDao
 import com.app.tech.codingchallenge.core.data.db.dao.PostDao
 import com.app.tech.codingchallenge.core.network.ApiRepository
 import com.app.tech.codingchallenge.core.network.ApiService
@@ -19,10 +20,11 @@ object RepositoryModule {
     fun provideApiRepository(
         service: ApiService,
         networkHandler: NetworkHandler,
-        postDao: PostDao
+        postDao: PostDao,
+        commentDao: CommentDao
     ): ApiRepository {
         return ApiRepository.ApiRepositoryImpl(
-            service, postDao, networkHandler
+            service, postDao, commentDao, networkHandler
         )
     }
 }

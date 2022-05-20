@@ -3,6 +3,7 @@ package com.app.tech.codingchallenge.core.di
 import android.content.Context
 import androidx.room.Room
 import com.app.tech.codingchallenge.core.data.db.AppDatabase
+import com.app.tech.codingchallenge.core.data.db.dao.CommentDao
 import com.app.tech.codingchallenge.core.data.db.dao.PostDao
 import dagger.Module
 import dagger.Provides
@@ -29,4 +30,8 @@ class DatabaseModule {
         return appDataBase.postDao()
     }
 
+    @Provides
+    fun provideCommentDao(appDataBase: AppDatabase): CommentDao {
+        return appDataBase.commentDao()
+    }
 }

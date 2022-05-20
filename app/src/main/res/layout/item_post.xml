@@ -28,6 +28,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="2"
             android:text="@{item.body}"
             android:textColor="@color/colorSecondaryText"
             android:textSize="@dimen/font_size_small"
