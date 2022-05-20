@@ -33,8 +33,14 @@ class PostsFragment : BaseFragment<FragmentPostsBinding>() {
     override fun getNavController(): NavController = findNavController()
 
     override fun onCreated(savedInstance: Bundle?) {
+        initBinding()
         initViews()
         initObserver()
+    }
+
+    private fun initBinding() {
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
     }
 
     private fun initViews() {
@@ -51,6 +57,17 @@ class PostsFragment : BaseFragment<FragmentPostsBinding>() {
         viewModel.apply {
             observe(posts) {
                 it?.let { adapter.collection = it }
+            }
+
+            observe(searchTextQuery) {
+                it?.let { searchQuery ->
+                    adapter.collection = posts.value?.let {
+                        it.filter { post ->
+                            post.title.contains(searchQuery, ignoreCase = true) ||
+                                    post.body.contains(searchQuery, ignoreCase = true)
+                        }
+                    } ?: emptyList()
+                } ?: kotlin.run { adapter.collection = posts.value ?: emptyList() }
             }
         }
     }

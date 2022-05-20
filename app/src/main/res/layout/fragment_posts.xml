@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.app.tech.codingchallenge.feature.dashboard.post.PostsViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,6 +21,7 @@
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="@dimen/margin_small"
             android:hint="@string/hint_search"
+            android:onTextChanged="@{(text,start,before,count) -> viewModel.onDataChange(text)}"
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
