@@ -32,6 +32,8 @@ ext {
     preference_version = "1.1.1"
     room_version = '2.4.2'
     material_dialog_version = '3.3.0'
+    rx_network_version = '3.0.8'
+    rx_kotlin_version = "2.4.0"
 
     mainApplication = [
             kotlin             : "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version",
@@ -49,7 +51,7 @@ ext {
             preference_core    : "androidx.datastore:datastore-preferences-core:$datastore_version",
             preference_main    : "androidx.preference:preference:$preference_version",
             preference_ktx     : "androidx.preference:preference-ktx:$preference_version",
-            material_dialog    : "com.afollestad.material-dialogs:core:$material_dialog_version",
+            material_dialog    : "com.afollestad.material-dialogs:core:$material_dialog_version"
     ]
 
     coroutines = [
@@ -59,10 +61,12 @@ ext {
     ]
 
     network = [
-            gson          : "com.squareup.retrofit2:converter-gson:$retrofit_version",
-            retrofit      : "com.squareup.retrofit2:retrofit:$retrofit_version",
-            conscrypt     : "org.conscrypt:conscrypt-android:$conscrypt_version",
-            okhttp_logging: "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+            gson               : "com.squareup.retrofit2:converter-gson:$retrofit_version",
+            retrofit           : "com.squareup.retrofit2:retrofit:$retrofit_version",
+            conscrypt          : "org.conscrypt:conscrypt-android:$conscrypt_version",
+            okhttp_logging     : "com.squareup.okhttp3:logging-interceptor:$okhttp_version",
+            rx_network_observer: "com.github.pwittchen:reactivenetwork-rx2:$rx_network_version",
+            rx_kotlin          : "io.reactivex.rxjava2:rxkotlin:$rx_kotlin_version"
     ]
 
     lifecycle = [

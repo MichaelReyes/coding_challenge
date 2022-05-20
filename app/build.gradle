@@ -89,6 +89,10 @@ dependencies {
     implementation networkDependencies.conscrypt
     implementation networkDependencies.okhttp_logging
 
+    //Network observer
+    implementation networkDependencies.rx_network_observer
+    implementation networkDependencies.rx_kotlin
+
     //Lifecycle
     implementation lifecycleDependencies.viewmodel
     implementation lifecycleDependencies.livedata

@@ -16,6 +16,12 @@ import retrofit2.HttpException
  */
 abstract class BaseViewModel : ViewModel() {
 
+    private val _hasInternetConnection = MutableLiveData<Boolean>(true)
+    val hasInternetConnection: LiveData<Boolean> = _hasInternetConnection
+    fun setHasInternetConnection(value: Boolean) {
+        _hasInternetConnection.postValue(value)
+    }
+
     //for navigation with arguments, added bundle
     private val _navigationId = MutableLiveData<Pair<Int, Bundle?>>()
     val navigationId: LiveData<Pair<Int, Bundle?>> = _navigationId

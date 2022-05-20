@@ -7,10 +7,13 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import com.app.tech.codingchallenge.core.common.LoadingDialog
 import com.app.tech.codingchallenge.core.extension.observe
 import com.google.gson.Gson
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 
 /**
  * To act as a super class for all other activities.
@@ -106,6 +109,11 @@ abstract class BaseActivity<V : ViewDataBinding> : AppCompatActivity() {
                     }
                 }
             }
+
+            (application as? App)?.internetConnectionStream
+                ?.onEach {
+                    setHasInternetConnection(it)
+                }?.launchIn(lifecycleScope)
         }
     }
 }
