@@ -26,7 +26,7 @@ android {
         testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
 
         //server base url config
-        buildConfigField 'String', 'SERVER_BASE_URL', String.format('"https://yc0h5jmthj.execute-api.ap-southeast-2.amazonaws.com/"')
+        buildConfigField 'String', 'SERVER_BASE_URL', String.format('"https://jsonplaceholder.typicode.com/"')
     }
 
     buildTypes {
