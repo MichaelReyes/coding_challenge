@@ -1,19 +1,32 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
+    id 'com.google.osdetector'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 android {
-    compileSdk 32
+
+    def config = rootProject.extensions.getByName("ext")
+
+    compileSdkVersion config["compile_sdk"]
 
     defaultConfig {
-        applicationId "com.app.tech.codingchallenge"
-        minSdk 23
-        targetSdk 32
-        versionCode 1
-        versionName "1.0"
+        applicationId config["application_id"]
+        minSdkVersion config["min_sdk"]
+        targetSdkVersion config["target_sdk"]
+        versionCode config["version_code"]
+        versionName config["version_name"]
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.android.test.runner.MultiDexTestRunner"
+
+        //server base url config
+        buildConfigField 'String', 'SERVER_BASE_URL', String.format('"https://yc0h5jmthj.execute-api.ap-southeast-2.amazonaws.com/"')
     }
 
     buildTypes {
@@ -22,21 +35,101 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
+        main.java.srcDirs += [file("$buildDir/generated/source/kapt/main")]
+        test.java.srcDirs += 'src/test/kotlin'
+        androidTest.java.srcDirs += 'src/androidTest/kotlin'
+    }
+
     kotlinOptions {
         jvmTarget = '1.8'
+    }
+
+    packagingOptions {
+        exclude 'META-INF/*'
     }
 }
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.6.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    def applicationDependencies = rootProject.ext.mainApplication
+    def coroutinesDependencies = rootProject.ext.coroutines
+    def networkDependencies = rootProject.ext.network
+    def lifecycleDependencies = rootProject.ext.lifecycle
+    def dependencyInjectionDependencies = rootProject.ext.dependencyInjection
+    def imageDependencies = rootProject.ext.image
+    def databaseDependencies = rootProject.ext.database
+
+    implementation fileTree(dir: 'libs', includes: ['*.jar'])
+
+    implementation applicationDependencies.kotlin
+    implementation applicationDependencies.core_ktx
+    implementation applicationDependencies.app_compat
+    implementation applicationDependencies.material_design
+    implementation applicationDependencies.constraint_layout
+    implementation applicationDependencies.legacy_support
+    implementation applicationDependencies.recyclerview
+    implementation applicationDependencies.annotation
+    implementation applicationDependencies.material_dialog
+
+    //Network
+    implementation networkDependencies.gson
+    implementation networkDependencies.retrofit
+    implementation networkDependencies.conscrypt
+    implementation networkDependencies.okhttp_logging
+
+    //Lifecycle
+    implementation lifecycleDependencies.viewmodel
+    implementation lifecycleDependencies.livedata
+    implementation lifecycleDependencies.runtime
+    implementation lifecycleDependencies.savedstate
+    //noinspection LifecycleAnnotationProcessorWithJava8
+    kapt lifecycleDependencies.compiler
+    implementation lifecycleDependencies.common
+
+    //Dependency Injection
+    implementation dependencyInjectionDependencies.hilt
+    kapt dependencyInjectionDependencies.hilt_compiler
+
+    //Navigation Components
+    implementation applicationDependencies.navigation_fragment
+    implementation applicationDependencies.navigation_ui
+
+    //Image processing
+    implementation imageDependencies.glide
+    kapt imageDependencies.glide_compiler
+
+    //Coroutines
+    implementation coroutinesDependencies.core
+    implementation coroutinesDependencies.android
+    implementation coroutinesDependencies.test
+
+    //Preference
+    implementation applicationDependencies.preference
+    implementation applicationDependencies.preference_main
+    implementation applicationDependencies.preference_core
+    implementation applicationDependencies.preference_ktx
+
+    //Room
+    implementation databaseDependencies.room_runtime
+    annotationProcessor databaseDependencies.room_kapt
+    kapt databaseDependencies.room_kapt
+    implementation databaseDependencies.room_ktx
+
+    //MultiDex
+    implementation applicationDependencies.multidex
+
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
